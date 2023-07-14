@@ -1,11 +1,12 @@
 import pygame
 import queue
 import labirintos
+from button import Button
 
 # Dimensões da janela e do labirinto
-largura_janela = 640
-altura_janela = 500
-tamanho_celula = 40
+largura_janela = 1280
+altura_janela = 720
+tamanho_celula = 60
 largura_labirinto = largura_janela // tamanho_celula
 altura_labirinto = altura_janela // tamanho_celula
 
@@ -67,7 +68,7 @@ def a_estrela(labirinto, inicio, objetivo):
 # Função para desenhar o labirinto na tela
 
 
-def desenhar_labirinto():
+def desenhar_labirinto(labirinto, janela):
     for i in range(12):
         for j in range(16):
             if labirinto[i][j] == '#':
@@ -88,68 +89,68 @@ def desenhar_labirinto():
 # Função para desenhar o caminho na tela
 
 
-def desenhar_caminho(caminho):
+def desenhar_caminho(caminho, janela):
     for pos in caminho:
         pygame.draw.rect(janela, COR_CAMINHO, (
             pos[1] * tamanho_celula, pos[0] * tamanho_celula, tamanho_celula, tamanho_celula))
         pygame.display.flip()
         pygame.time.wait(200)
+        
 
+def play():
+    # Labirinto de exemplo
 
-# Labirinto de exemplo
+    labirinto = [
+        ['$', '#', '#', '#', '#', '#', '#', '#',
+            '#', '#', '#', '#', '#', '#', '#', '#'],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+            ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
+        ['#', ' ', '#', ' ', '#', ' ', '#', '#',
+            '#', ' ', '#', '#', '#', ' ', ' ', '#'],
+        ['#', ' ', '#', ' ', '#', ' ', ' ', ' ',
+            '#', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
+        ['#', ' ', '#', '#', '#', '#', '#', '#',
+            '#', ' ', '#', '#', ' ', '#', ' ', '#'],
+        ['#', ' ', '#', ' ', ' ', ' ', ' ', ' ',
+            ' ', ' ', ' ', ' ', ' ', '#', ' ', '#'],
+        ['#', ' ', '#', '#', '#', '#', '#', '#',
+            '#', '#', '#', '#', '#', '#', ' ', '#'],
+        ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+            ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
+        ['#', '#', '#', '#', '#', '#', ' ', '#',
+            '#', '#', '#', '#', '#', '#', ' ', '#'],
+        ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+            ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
+        ['#', '#', ' ', '#', '#', '#', '#', '#',
+            '#', '#', ' ', '#', '#', '#', ' ', '#'],
+        ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
+            ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'D'],
+        ['#', '#', '#', '#', '#', '#', '#', '#',
+            '#', '#', '#', '#', '#', '#', '#', '#'],
 
-labirinto = [
-    ['$', '#', '#', '#', '#', '#', '#', '#',
-        '#', '#', '#', '#', '#', '#', '#', '#'],
-    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-    ['#', ' ', '#', ' ', '#', ' ', '#', '#',
-        '#', ' ', '#', '#', '#', ' ', ' ', '#'],
-    ['#', ' ', '#', ' ', '#', ' ', ' ', ' ',
-        '#', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-    ['#', ' ', '#', '#', '#', '#', '#', '#',
-        '#', ' ', '#', '#', ' ', '#', ' ', '#'],
-    ['#', ' ', '#', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', '#', ' ', '#'],
-    ['#', ' ', '#', '#', '#', '#', '#', '#',
-        '#', '#', '#', '#', '#', '#', ' ', '#'],
-    ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-    ['#', '#', '#', '#', '#', '#', ' ', '#',
-        '#', '#', '#', '#', '#', '#', ' ', '#'],
-    ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#'],
-    ['#', '#', ' ', '#', '#', '#', '#', '#',
-        '#', '#', ' ', '#', '#', '#', ' ', '#'],
-    ['#', ' ', ' ', ' ', ' ', ' ', ' ', ' ',
-        ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'D'],
-    ['#', '#', '#', '#', '#', '#', '#', '#',
-        '#', '#', '#', '#', '#', '#', '#', '#'],
+    ]
 
-]
+    inicio = (1, 0)
+    objetivo = (11, 15)
 
-inicio = (1, 0)
-objetivo = (11, 15)
+    # Inicialização do Pygame
+    pygame.init()
+    janela = pygame.display.set_mode((largura_janela, altura_janela))
+    pygame.display.set_caption('Labirinto')
 
+    # Desenha o labirinto inicial
+    desenhar_labirinto(labirinto,janela)
 
-# Inicialização do Pygame
-pygame.init()
-janela = pygame.display.set_mode((largura_janela, altura_janela))
-pygame.display.set_caption('Labirinto')
+    # Executa o algoritmo A* e desenha o caminho encontrado
+    caminho = a_estrela(labirinto, inicio, objetivo)
+    if caminho:
+        desenhar_caminho(caminho, janela)
+    else:
+        print("Não foi possível encontrar um caminho válido.")
 
-# Desenha o labirinto inicial
-desenhar_labirinto()
-
-# Executa o algoritmo A* e desenha o caminho encontrado
-caminho = a_estrela(labirinto, inicio, objetivo)
-if caminho:
-    desenhar_caminho(caminho)
-else:
-    print("Não foi possível encontrar um caminho válido.")
-
-# Loop principal do jogo
-while True:
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            pygame.quit()
-            exit()
+    # Loop principal do jogo
+    while True:
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                pygame.quit()
+                exit()
