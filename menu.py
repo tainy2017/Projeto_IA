@@ -1,6 +1,6 @@
 import pygame, sys
 from button import Button
-from labirinto import play
+from mapaPrincipal import play
 
 pygame.init()
 
