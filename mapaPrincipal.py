@@ -1,6 +1,5 @@
 import pygame
 import queue
-import mapas
 from button import Button
 
 # Dimensões da janela e do mapa
