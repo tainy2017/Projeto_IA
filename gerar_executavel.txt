@@ -1,0 +1,3 @@
+pip install auto-py-to-exe
+auto-py-to-exe
+https://medium.com/@asusrishabh/convert-python-program-to-exe-c773345716df#:~:text=1%20Step%201%3A%20Installation%20of%20auto-py-to-exe%20using%20the,program%20by%20clicking%20on%20CONVERT%20.PY%20TO%20.EXE

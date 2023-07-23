@@ -1,0 +1,2 @@
+Para executar o executável, rodar o menu.exe incluso na pasta output. 
+Devido as dependências desse arquivo, ele necessita estar na mesma pasta que os outros arquivos para executar corretamente.
