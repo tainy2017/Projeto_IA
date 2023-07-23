@@ -22,7 +22,7 @@ def calcular_heuristica(pos_atual, pos_objetivo):
 
 # Código referente ao algoritmo A*
 def a_estrela(mapa, inicio, objetivo):
-    def dentro_limites(pos):
+    def dentro_limites(pos): 
         return 0 <= pos[0] < altura_mapa and 0 <= pos[1] < largura_mapa
 
     def obter_vizinhos(pos):
